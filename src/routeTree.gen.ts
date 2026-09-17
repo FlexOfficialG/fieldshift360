@@ -10,11 +10,25 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AiInsightsRouteImport } from './routes/ai-insights'
+import { Route as DataSourcesRouteImport } from './routes/data-sources'
 import { Route as FieldAnalysisRouteImport } from './routes/field-analysis'
+import { Route as MethodologyRouteImport } from './routes/methodology'
+import { Route as ScenarioLabRouteImport } from './routes/scenario-lab'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiInsightsRoute = AiInsightsRouteImport.update({
+  id: '/ai-insights',
+  path: '/ai-insights',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DataSourcesRoute = DataSourcesRouteImport.update({
+  id: '/data-sources',
+  path: '/data-sources',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FieldAnalysisRoute = FieldAnalysisRouteImport.update({
@@ -22,31 +36,76 @@ const FieldAnalysisRoute = FieldAnalysisRouteImport.update({
   path: '/field-analysis',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MethodologyRoute = MethodologyRouteImport.update({
+  id: '/methodology',
+  path: '/methodology',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ScenarioLabRoute = ScenarioLabRouteImport.update({
+  id: '/scenario-lab',
+  path: '/scenario-lab',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ai-insights': typeof AiInsightsRoute
+  '/data-sources': typeof DataSourcesRoute
   '/field-analysis': typeof FieldAnalysisRoute
+  '/methodology': typeof MethodologyRoute
+  '/scenario-lab': typeof ScenarioLabRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ai-insights': typeof AiInsightsRoute
+  '/data-sources': typeof DataSourcesRoute
   '/field-analysis': typeof FieldAnalysisRoute
+  '/methodology': typeof MethodologyRoute
+  '/scenario-lab': typeof ScenarioLabRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ai-insights': typeof AiInsightsRoute
+  '/data-sources': typeof DataSourcesRoute
   '/field-analysis': typeof FieldAnalysisRoute
+  '/methodology': typeof MethodologyRoute
+  '/scenario-lab': typeof ScenarioLabRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/field-analysis'
+  fullPaths:
+    | '/'
+    | '/ai-insights'
+    | '/data-sources'
+    | '/field-analysis'
+    | '/methodology'
+    | '/scenario-lab'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/field-analysis'
-  id: '__root__' | '/' | '/field-analysis'
+  to:
+    | '/'
+    | '/ai-insights'
+    | '/data-sources'
+    | '/field-analysis'
+    | '/methodology'
+    | '/scenario-lab'
+  id:
+    | '__root__'
+    | '/'
+    | '/ai-insights'
+    | '/data-sources'
+    | '/field-analysis'
+    | '/methodology'
+    | '/scenario-lab'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AiInsightsRoute: typeof AiInsightsRoute
+  DataSourcesRoute: typeof DataSourcesRoute
   FieldAnalysisRoute: typeof FieldAnalysisRoute
+  MethodologyRoute: typeof MethodologyRoute
+  ScenarioLabRoute: typeof ScenarioLabRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -58,6 +117,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ai-insights': {
+      id: '/ai-insights'
+      path: '/ai-insights'
+      fullPath: '/ai-insights'
+      preLoaderRoute: typeof AiInsightsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/data-sources': {
+      id: '/data-sources'
+      path: '/data-sources'
+      fullPath: '/data-sources'
+      preLoaderRoute: typeof DataSourcesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/field-analysis': {
       id: '/field-analysis'
       path: '/field-analysis'
@@ -65,12 +138,30 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FieldAnalysisRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/methodology': {
+      id: '/methodology'
+      path: '/methodology'
+      fullPath: '/methodology'
+      preLoaderRoute: typeof MethodologyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/scenario-lab': {
+      id: '/scenario-lab'
+      path: '/scenario-lab'
+      fullPath: '/scenario-lab'
+      preLoaderRoute: typeof ScenarioLabRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AiInsightsRoute: AiInsightsRoute,
+  DataSourcesRoute: DataSourcesRoute,
   FieldAnalysisRoute: FieldAnalysisRoute,
+  MethodologyRoute: MethodologyRoute,
+  ScenarioLabRoute: ScenarioLabRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

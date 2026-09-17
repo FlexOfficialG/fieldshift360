@@ -72,7 +72,7 @@ export function DataStateNotice({
   message,
 }: {
   status: NasaDataStatus | "loading" | "error";
-  message?: string | null;
+  message?: string | null | undefined;
 }) {
   if (status === "available") return null;
 
