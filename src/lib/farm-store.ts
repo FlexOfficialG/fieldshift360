@@ -87,3 +87,51 @@ export function nasaQueryOptions(farm: FarmConfig) {
     retry: 1,
   });
 }
+
+/* ---- Scenario Lab state (hypothetical, user-created changes) ---- */
+
+export type Scenario = { tDelta: number; rainPct: number };
+
+const SCENARIO_KEY = "field-shift-scenario";
+export const DEFAULT_SCENARIO: Scenario = { tDelta: 0, rainPct: 0 };
+
+let scenario: Scenario = DEFAULT_SCENARIO;
+const scenarioListeners = new Set<() => void>();
+
+export function setScenario(next: Scenario) {
+  scenario = next;
+  if (typeof window !== "undefined") {
+    window.localStorage.setItem(SCENARIO_KEY, JSON.stringify(next));
+  }
+  for (const l of scenarioListeners) l();
+}
+
+let scenarioHydrated = false;
+function hydrateScenario() {
+  if (scenarioHydrated || typeof window === "undefined") return;
+  scenarioHydrated = true;
+  try {
+    const raw = window.localStorage.getItem(SCENARIO_KEY);
+    if (!raw) return;
+    const parsed = JSON.parse(raw) as Partial<Scenario>;
+    if (typeof parsed.tDelta === "number" && typeof parsed.rainPct === "number") {
+      scenario = { tDelta: parsed.tDelta, rainPct: parsed.rainPct };
+      for (const l of scenarioListeners) l();
+    }
+  } catch {
+    /* ignore */
+  }
+}
+
+export function useScenario(): Scenario {
+  const value = useSyncExternalStore(
+    (cb) => {
+      scenarioListeners.add(cb);
+      return () => scenarioListeners.delete(cb);
+    },
+    () => scenario,
+    () => DEFAULT_SCENARIO,
+  );
+  useEffect(hydrateScenario, []);
+  return value;
+}
