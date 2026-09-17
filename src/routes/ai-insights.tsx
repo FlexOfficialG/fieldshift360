@@ -24,7 +24,7 @@ export const Route = createFileRoute("/ai-insights")({
       },
     ],
   }),
-  component: AiInsights;
+  component: AiInsights,
 });
 
 function AiInsights() {
