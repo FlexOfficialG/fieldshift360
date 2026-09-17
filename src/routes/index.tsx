@@ -117,7 +117,6 @@ function Dashboard() {
                 title="Temperature trend"
                 variable="T2M — Temperature at 2 Meters"
                 unit={variable("T2M")?.unit ?? "C"}
-                {...aggregate(nasa.series, "t2m")}
                 points={aggregate(nasa.series, "t2m").points}
                 resolution={aggregate(nasa.series, "t2m").resolution}
                 color="var(--color-chart-1)"
