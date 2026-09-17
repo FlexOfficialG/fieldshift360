@@ -19,7 +19,7 @@ export const Route = createFileRoute("/methodology")({
       },
     ],
   }),
-  component: Methodology;
+  component: Methodology,
 });
 
 const STEPS = ["NASA DATA", "PROCESSING", "INDICATORS", "SCENARIO", "INSIGHT"];
