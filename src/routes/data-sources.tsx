@@ -137,7 +137,7 @@ function DataSources() {
               The header block exactly as returned by NASA POWER for this request.
             </p>
             <pre className="mt-4 max-h-72 overflow-auto rounded-md border border-border bg-muted p-4 font-mono text-xs text-muted-foreground">
-              {p?.header ? JSON.stringify(p.header, null, 2) : "—"}
+              {p?.header ?? "—"}
             </pre>
           </section>
 

@@ -47,7 +47,8 @@ export type NasaPowerResult = {
     end: string;
     requestedAt: string;
     fillValue: number;
-    header: Record<string, unknown> | null;
+    /** Verbatim header block from the API response, JSON-encoded. */
+    header: string | null;
   };
   variables: NasaVariable[];
   series: NasaDailyPoint[];
@@ -107,7 +108,7 @@ export const fetchNasaPower = createServerFn({ method: "GET" })
       end: data.end,
       requestedAt: new Date().toISOString(),
       fillValue: FILL,
-      header: null as Record<string, unknown> | null,
+      header: null as string | null,
     };
 
     let json: any;
@@ -156,7 +157,7 @@ export const fetchNasaPower = createServerFn({ method: "GET" })
       returnedLon: Array.isArray(coords) ? (coords[0] ?? null) : null,
       returnedLat: Array.isArray(coords) ? (coords[1] ?? null) : null,
       elevation: Array.isArray(coords) ? (coords[2] ?? null) : null,
-      header: (json?.header ?? null) as Record<string, unknown> | null,
+      header: json?.header ? JSON.stringify(json.header, null, 2) : null,
     };
 
     const clean = (v: unknown) =>
